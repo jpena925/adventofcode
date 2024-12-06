@@ -1,0 +1,60 @@
+# AOC 2024
+
+```elixir
+Mix.install([
+  {:kino_aoc, "~> 0.1"}
+])
+```
+
+## Day 1
+
+<!-- livebook:{"attrs":"eyJhc3NpZ25fdG8iOiJwdXp6bGVfaW5wdXQiLCJkYXkiOiIxIiwic2Vzc2lvbl9zZWNyZXQiOiJBT0NfU0VTU0lPTiIsInllYXIiOiIyMDI0In0","chunks":null,"kind":"Elixir.KinoAOC.HelperCell","livebook_object":"smart_cell"} -->
+
+```elixir
+{:ok, puzzle_input} =
+  KinoAOC.download_puzzle("2024", "1", System.fetch_env!("LB_AOC_SESSION"))
+```
+
+```elixir
+defmodule Day01 do
+  def final_distance(input) do
+    {left_list, right_list} =
+      input
+      |> parse()
+      |> Enum.unzip()
+
+    left_sorted = Enum.sort(left_list)
+    right_sorted = Enum.sort(right_list)
+
+    Enum.reduce(Enum.zip(left_sorted, right_sorted), 0, fn {l, r}, acc ->
+      acc + abs(l - r)
+    end)
+  end
+
+  def part2(input) do
+    all = parse(input)
+    {first, second} = Enum.unzip(all)
+    frequencies = Enum.frequencies(second)
+    first
+    |> Enum.map(fn n ->
+      n * Map.get(frequencies, n, 0)
+    end)
+    |> Enum.sum
+  end
+
+  defp parse(input) do
+    input
+    |> String.split("\n", trim: true)
+    |> Enum.map(fn line ->
+      line
+      |> String.split()
+      |> Enum.map(&String.to_integer/1)
+      |> List.to_tuple() 
+    end)
+  end
+end
+
+
+```
+
+<!-- livebook:{"offset":1203,"stamp":{"token":"XCP.-OotoOrIQWaUuM36X9zhs2sIlnQ0ZBUAPsB4qGUOlxfOmcphpkbr2ssfxAo3T2exH4pAkw4ibA4lQSqKicq_jvIBreSD8AJedB3J65b-iDCAOAHu1fU","version":2}} -->
