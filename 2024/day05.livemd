@@ -1,0 +1,52 @@
+# AOC 2024
+
+```elixir
+Mix.install([{:kino_aoc, "~> 0.1"}])
+```
+
+## Day 05
+
+<!-- livebook:{"attrs":"eyJhc3NpZ25fdG8iOiJwdXp6bGVfaW5wdXQiLCJkYXkiOiI1Iiwic2Vzc2lvbl9zZWNyZXQiOiJBT0NfU0VTU0lPTiIsInllYXIiOiIyMDI0In0","chunks":null,"kind":"Elixir.KinoAOC.HelperCell","livebook_object":"smart_cell"} -->
+
+```elixir
+{:ok, puzzle_input} =
+  KinoAOC.download_puzzle("2024", "5", System.fetch_env!("LB_AOC_SESSION"))
+```
+
+```elixir
+# test_input = Kino.Input.read(test_input)
+
+[rules, updates] =
+  puzzle_input
+  |> String.split("\n\n")
+  |> Enum.map(&String.split(&1, "\n"))
+
+rule_key =
+  Enum.reduce(rules, %{}, fn rule, acc ->
+    [first_page, other_page] = String.split(rule, "|")
+
+    Map.update(acc, first_page, MapSet.new([other_page]), fn set ->
+      MapSet.put(set, other_page)
+    end)
+  end)
+
+updates
+|> Enum.map(&String.split(&1, ","))
+|> Enum.filter(fn update ->
+  Enum.reduce_while(update, MapSet.new(), fn page, acc ->
+    if rule_key |> Map.get(page, MapSet.new()) |> MapSet.disjoint?(acc) do
+      {:cont, MapSet.put(acc, page)}
+    else
+      {:halt, false}
+    end
+  end)
+end)
+|> Enum.map(fn pages ->
+  pages
+  |> Enum.at(pages |> length() |> div(2))
+  |> String.to_integer()
+end)
+|> Enum.sum()
+```
+
+<!-- livebook:{"offset":1207,"stamp":{"token":"XCP.qe5tuTiCX17SvY1bUkYqzjIZ2zvut7w0oqgqi-DZ_m5WH3csNiMbW6GLlkjZ79q_P09wr1vw0278Ymrz06bDY29-iyi3lUmwtJMOCIeIqhnK_tVRrQQ","version":2}} -->
