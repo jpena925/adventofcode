@@ -1,31 +1,20 @@
 # Advent of Code 2025
 
-## Daily Workflow
+## daily workflow
 
 ```bash
-# 1. Generate files (if not current day, set day first: mix aoc.set -d X)
+# 1. generate files (if not current day, set day first: mix aoc.set -d X)
 mix aoc.create
 
-# 2. Copy example from AoC website into test file, replace CHANGE_ME with expected answer
+# 2. copy example from AoC website into test file, replace CHANGE_ME with expected answer
 
-# 3. Write solution in lib/aoc2025/y25/day0X.ex
+# 3. work on solution
 
-# 4. Test with example
+# 4. test with the example test
 mix aoc.test
 
-# 5. Run with real input
+# 5. run with the real test
 mix aoc.run
 
-# 6. Copy answer and paste into adventofcode.com
+# 6. enter in answer on site
 ```
-
-## Files
-
-- Solution: `lib/aoc2025/y25/day0X.ex`
-- Test: `test/2025/day0X_test.exs`
-- Input: `priv/input/2025/day-0X.inp` (auto-downloaded)
-
-## Setup (already done)
-
-- Session cookie in `~/.adventofcode.session`
-- Config in `config/config.exs`
