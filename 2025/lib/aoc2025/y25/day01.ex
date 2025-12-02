@@ -6,7 +6,7 @@ defmodule Aoc2025.Y25.Day01 do
   end
 
   def part_one(problem) do
-    {dial_number, total_zeroes} =
+    {_dial_number, total_zeroes} =
       problem
       |> String.split("\n")
       |> Enum.reject(fn x -> x == "" end)
@@ -48,7 +48,7 @@ defmodule Aoc2025.Y25.Day01 do
   end
 
   def part_two(problem) do
-    {dial_number, zero_crossings} =
+    {_dial_number, zero_crossings} =
       problem
       |> String.split("\n")
       |> Enum.reject(fn x -> x == "" end)

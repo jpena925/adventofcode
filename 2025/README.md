@@ -3,7 +3,8 @@
 ## daily workflow
 
 ```bash
-# 1. generate files (if not current day, set day first: mix aoc.set -d X)
+# 1. generate files (X being the day of the advent)
+mix aoc.set -d X
 mix aoc.create
 
 # 2. copy example from AoC website into test file, replace CHANGE_ME with expected answer
