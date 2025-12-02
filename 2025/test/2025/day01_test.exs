@@ -55,17 +55,22 @@ defmodule Aoc2025.Y25.Day01Test do
   #   assert {:ok, @part_one_solution} == AoC.run(2025, 1, :part_one)
   # end
 
-  # test "part two example" do
-  #   input = ~S"""
-  #   This is an
-  #   example input.
-  #   replace with
-  #   an example from
-  #   the AoC website.
-  #   """
-  #
-  #   assert CHANGE_ME == solve(input, :part_two)
-  # end
+  test "part two example" do
+    input = ~S"""
+    L68
+    L30
+    R48
+    L5
+    R60
+    L55
+    L1
+    L99
+    R14
+    L82
+    """
+
+    assert 6 == solve(input, :part_two)
+  end
 
   # You may also implement a test to validate the part two to ensure that you
   # did not broke your shared modules when implementing another problem.

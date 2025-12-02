@@ -1,0 +1,22 @@
+# Build artifacts
+_build/
+*.beam
+
+# Dependency directory
+deps/
+
+# Mix lock file (you might want to commit this, uncomment if so)
+# mix.lock
+
+# Environment files
+.env
+.env.*
+
+# Editor/IDE files
+.elixir_ls/
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+

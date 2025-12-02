@@ -47,7 +47,44 @@ defmodule Aoc2025.Y25.Day01 do
     |> String.to_integer()
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  def part_two(problem) do
+    {dial_number, zero_crossings} =
+      problem
+      |> String.split("\n")
+      |> Enum.reject(fn x -> x == "" end)
+      |> Enum.reduce({50, 0}, fn move, acc ->
+        if String.first(move) == "L" do
+          move_left_with_crossings(move, acc)
+        else
+          move_right_with_crossings(move, acc)
+        end
+      end)
+
+    zero_crossings
+  end
+
+  defp move_left_with_crossings(move, {current, total}) do
+    move_amount = convert_move_to_int(move)
+
+    crossings =
+      cond do
+        current == 0 -> div(move_amount, 100)
+        move_amount >= current -> 1 + div(move_amount - current, 100)
+        true -> 0
+      end
+
+    final_position = rem(rem(current - move_amount, 100) + 100, 100)
+
+    {final_position, total + crossings}
+  end
+
+  defp move_right_with_crossings(move, {current, total}) do
+    move_amount = convert_move_to_int(move)
+
+    crossings = div(current + move_amount, 100)
+
+    final_position = rem(current + move_amount, 100)
+
+    {final_position, total + crossings}
+  end
 end
