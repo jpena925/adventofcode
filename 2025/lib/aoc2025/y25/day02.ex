@@ -51,7 +51,40 @@ defmodule Aoc2025.Y25.Day02 do
     end
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  def part_two(problem) do
+    total =
+      problem
+      |> String.trim()
+      |> String.split(",")
+      |> Enum.reject(fn x -> x == "" end)
+      |> Enum.reduce(0, fn range, acc ->
+        range_endings = String.split(range, "-")
+
+        acc + check_within_range_part_two(range_endings)
+      end)
+
+    total
+  end
+
+  defp check_within_range_part_two([first, last]) do
+    String.to_integer(first)..String.to_integer(last)
+    |> Enum.reduce(0, fn num, acc ->
+      num_string = Integer.to_string(num)
+
+      if is_repeated_part_two?(num_string), do: acc + num, else: acc
+    end)
+  end
+
+  defp is_repeated_part_two?(num_string) do
+    len = String.length(num_string)
+
+    if len <= 1 do
+      false
+    else
+      Enum.any?(1..div(len, 2), fn n ->
+        rem(len, n) == 0 and
+          String.duplicate(String.slice(num_string, 0, n), div(len, n)) == num_string
+      end)
+    end
+  end
 end
