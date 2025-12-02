@@ -3,7 +3,6 @@ defmodule Aoc2025.Y25.Day01Test do
   alias Aoc2025.Y25.Day01, as: Solution, warn: false
   use ExUnit.Case, async: true
 
-
   # To run the test, run one of the following commands:
   #
   #     mix AoC.test --year 2025 --day 1
@@ -21,7 +20,6 @@ defmodule Aoc2025.Y25.Day01Test do
   #
   # Good luck!
 
-
   defp solve(input, part) do
     problem =
       input
@@ -33,20 +31,23 @@ defmodule Aoc2025.Y25.Day01Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    L68
+    L30
+    R48
+    L5
+    R60
+    L55
+    L1
+    L99
+    R14
+    L82
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 3 == solve(input, :part_one)
   end
-
 
   # Once your part one was successfully sumbitted, you may uncomment this test
   # to ensure your implementation was not altered when you implement part two.
-
 
   # @part_one_solution CHANGE_ME
   #
@@ -66,10 +67,8 @@ defmodule Aoc2025.Y25.Day01Test do
   #   assert CHANGE_ME == solve(input, :part_two)
   # end
 
-
   # You may also implement a test to validate the part two to ensure that you
   # did not broke your shared modules when implementing another problem.
-
 
   # @part_two_solution CHANGE_ME
   #
