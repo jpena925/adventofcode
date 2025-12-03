@@ -31,14 +31,13 @@ defmodule Aoc2025.Y25.Day03Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    987654321111111
+    811111111111119
+    234234234234278
+    818181911112111
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 357 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
