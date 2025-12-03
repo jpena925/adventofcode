@@ -31,7 +31,16 @@ defmodule Aoc2025.Y25.Day03 do
     |> Enum.max()
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  def part_two(problem) do
+    problem
+    |> String.split("\n", trim: true)
+    |> Enum.reduce(0, fn line, acc ->
+      acc + get_largest_twelve_digits(line)
+    end)
+  end
+
+  defp get_largest_twelve_digits(_line) do
+    #within each line look for the 12 digits (adjacent or not, but sequential) that form the largest number
+    1
+  end
 end
