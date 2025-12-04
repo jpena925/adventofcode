@@ -39,8 +39,35 @@ defmodule Aoc2025.Y25.Day03 do
     end)
   end
 
-  defp get_largest_twelve_digits(_line) do
-    #within each line look for the 12 digits (adjacent or not, but sequential) that form the largest number
-    1
+  defp get_largest_twelve_digits(line) do
+    charlist = String.to_charlist(line)
+    pick_digits(charlist, 0, 12, [])
+  end
+
+  defp pick_digits(_charlist, _start, 0, acc) do
+    acc
+    |> Enum.reverse()
+    |> convert_to_integer()
+  end
+
+  defp pick_digits(charlist, start, remaining, acc) do
+    {big_number, max_index} = charlist
+    |> Enum.slice(start, length(charlist) - start - (remaining - 1))
+    |> Enum.with_index()
+    |> Enum.reduce({0, 0}, fn {num, index}, {max, max_index} ->
+      if num > max do
+        {num, index}
+      else
+        {max, max_index}
+      end
+    end)
+
+    pick_digits(charlist, start + max_index + 1, remaining - 1, [big_number | acc])
+  end
+
+  defp convert_to_integer(charlist) do
+    charlist
+    |> List.to_string()
+    |> String.to_integer()
   end
 end
