@@ -1,6 +1,8 @@
 defmodule Aoc2025.Y25.Day04 do
   alias AoC.Input
 
+  @deltas [{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}]
+
   def parse(input, _part) do
     # This function will receive the input path or an %AoC.Input.TestInput{}
     # struct. To support the test you may read both types of input with either:
@@ -22,13 +24,14 @@ defmodule Aoc2025.Y25.Day04 do
   end
 
   def part_one(problem) do
-    _set_of_at_positions = problem
-    |> String.split("\n", trim: true)
-    |> Enum.with_index()
-    |> Enum.flat_map(fn {line, row_num} ->
-      transform_to_coordinates(line, row_num)
-    end)
-    |> MapSet.new()
+    _set_of_at_positions =
+      problem
+      |> String.split("\n", trim: true)
+      |> Enum.with_index()
+      |> Enum.flat_map(fn {line, row_num} ->
+        transform_to_coordinates(line, row_num)
+      end)
+      |> MapSet.new()
   end
 
   defp transform_to_coordinates(line, row_num) do
