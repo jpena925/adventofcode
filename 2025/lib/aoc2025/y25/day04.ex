@@ -24,7 +24,7 @@ defmodule Aoc2025.Y25.Day04 do
   end
 
   def part_one(problem) do
-    _set_of_at_positions =
+    set_of_at_positions =
       problem
       |> String.split("\n", trim: true)
       |> Enum.with_index()
@@ -32,6 +32,21 @@ defmodule Aoc2025.Y25.Day04 do
         transform_to_coordinates(line, row_num)
       end)
       |> MapSet.new()
+
+    set_of_at_positions
+    |> Enum.reduce(0, fn {row, column}, acc ->
+      moore_values =
+        Enum.map(@deltas, fn {delta_row, delta_column} ->
+          {row + delta_row, column + delta_column}
+        end)
+
+      neighbor_count =
+        Enum.count(moore_values, fn neighbor ->
+          MapSet.member?(set_of_at_positions, neighbor)
+        end)
+
+      if neighbor_count < 4, do: acc + 1, else: acc
+    end)
   end
 
   defp transform_to_coordinates(line, row_num) do
