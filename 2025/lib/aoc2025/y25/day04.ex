@@ -22,10 +22,25 @@ defmodule Aoc2025.Y25.Day04 do
   end
 
   def part_one(problem) do
-    # This function receives the problem returned by parse/2 and must return
-    # today's problem solution for part one.
+    _set_of_at_positions = problem
+    |> String.split("\n", trim: true)
+    |> Enum.with_index()
+    |> Enum.flat_map(fn {line, row_num} ->
+      transform_to_coordinates(line, row_num)
+    end)
+    |> MapSet.new()
+  end
 
-    problem
+  defp transform_to_coordinates(line, row_num) do
+    line
+    |> String.graphemes()
+    |> Enum.with_index()
+    |> Enum.reduce([], fn {char, idx}, acc ->
+      case {char, idx} do
+        {"@", _} -> [{row_num, idx} | acc]
+        _ -> acc
+      end
+    end)
   end
 
   # def part_two(problem) do

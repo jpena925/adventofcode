@@ -31,14 +31,19 @@ defmodule Aoc2025.Y25.Day04Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    ..@@.@@@@.
+    @@@.@.@.@@
+    @@@@@.@.@@
+    @.@@@@..@.
+    @@.@@@@.@@
+    .@@@@@@@.@
+    .@.@.@.@@@
+    @.@@@.@@@@
+    .@@@@@@@@.
+    @.@.@@@.@.
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 13 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
