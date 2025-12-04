@@ -51,16 +51,17 @@ defmodule Aoc2025.Y25.Day03 do
   end
 
   defp pick_digits(charlist, start, remaining, acc) do
-    {big_number, max_index} = charlist
-    |> Enum.slice(start, length(charlist) - start - (remaining - 1))
-    |> Enum.with_index()
-    |> Enum.reduce({0, 0}, fn {num, index}, {max, max_index} ->
-      if num > max do
-        {num, index}
-      else
-        {max, max_index}
-      end
-    end)
+    {big_number, max_index} =
+      charlist
+      |> Enum.slice(start, length(charlist) - start - (remaining - 1))
+      |> Enum.with_index()
+      |> Enum.reduce({0, 0}, fn {num, index}, {max, max_index} ->
+        if num > max do
+          {num, index}
+        else
+          {max, max_index}
+        end
+      end)
 
     pick_digits(charlist, start + max_index + 1, remaining - 1, [big_number | acc])
   end

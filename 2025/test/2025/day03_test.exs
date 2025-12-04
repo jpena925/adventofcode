@@ -57,7 +57,7 @@ defmodule Aoc2025.Y25.Day03Test do
     818181911112111
     """
 
-    assert 3121910778619 == solve(input, :part_two)
+    assert 3_121_910_778_619 == solve(input, :part_two)
   end
 
   # You may also implement a test to validate the part two to ensure that you
