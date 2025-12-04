@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+
+# Elixir/Erlang
+_build/
+deps/
+*.beam
+.elixir_ls/
+
+# Secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
