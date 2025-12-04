@@ -24,24 +24,27 @@ defmodule Aoc2025.Y25.Day04 do
   end
 
   def part_one(problem) do
-    set_of_at_positions =
-      problem
-      |> String.split("\n", trim: true)
-      |> Enum.with_index()
-      |> Enum.flat_map(fn {line, row_num} ->
-        transform_to_coordinates(line, row_num)
-      end)
-      |> MapSet.new()
+    set_of_at_positions = build_paper_map(problem)
 
     set_of_at_positions
     |> Enum.reduce(0, fn {row, column}, acc ->
-      neighbor_count =
-        Enum.count(@deltas, fn {delta_row, delta_column} ->
-          MapSet.member?(set_of_at_positions, {row + delta_row, column + delta_column})
-        end)
-
-      if neighbor_count < 4, do: acc + 1, else: acc
+      if count_neighbors({row, column}, set_of_at_positions) < 4, do: acc + 1, else: acc
     end)
+  end
+
+  def part_two(problem) do
+    positions = build_paper_map(problem)
+    remove_all_accessible_paper(positions, 0)
+  end
+
+  defp build_paper_map(problem) do
+    problem
+    |> String.split("\n", trim: true)
+    |> Enum.with_index()
+    |> Enum.flat_map(fn {line, row_num} ->
+      transform_to_coordinates(line, row_num)
+    end)
+    |> MapSet.new()
   end
 
   defp transform_to_coordinates(line, row_num) do
@@ -56,7 +59,25 @@ defmodule Aoc2025.Y25.Day04 do
     end)
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  defp remove_all_accessible_paper(positions, total_removed) do
+    accessible =
+      positions
+      |> Enum.filter(fn {row, col} ->
+        count_neighbors({row, col}, positions) < 4
+      end)
+      |> MapSet.new()
+
+    if MapSet.size(accessible) == 0 do
+      total_removed
+    else
+      remaining = MapSet.difference(positions, accessible)
+      remove_all_accessible_paper(remaining, total_removed + MapSet.size(accessible))
+    end
+  end
+
+  defp count_neighbors({row, col}, positions) do
+    Enum.count(@deltas, fn {delta_row, delta_column} ->
+      MapSet.member?(positions, {row + delta_row, col + delta_column})
+    end)
+  end
 end
