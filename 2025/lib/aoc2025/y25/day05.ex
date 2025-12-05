@@ -22,10 +22,24 @@ defmodule Aoc2025.Y25.Day05 do
   end
 
   def part_one(problem) do
-    # This function receives the problem returned by parse/2 and must return
-    # today's problem solution for part one.
+    [fresh_ranges, item_numbers] = String.split(problem, "\n\n", trim: true)
+    fresh_ranges_list = parse_ranges(fresh_ranges)
 
-    problem
+    item_numbers
+    |> String.split("\n", trim: true)
+    |> Enum.count(fn num_string ->
+      num = String.to_integer(num_string)
+      Enum.any?(fresh_ranges_list, fn {min, max} -> num >= min and num <= max end)
+    end)
+  end
+
+  def parse_ranges(range) do
+    range
+    |> String.split("\n", trim: true)
+    |> Enum.map(fn s ->
+      [a, b] = String.split(s, "-")
+      {String.to_integer(a), String.to_integer(b)}
+    end)
   end
 
   # def part_two(problem) do

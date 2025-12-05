@@ -31,14 +31,20 @@ defmodule Aoc2025.Y25.Day05Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    3-5
+    10-14
+    16-20
+    12-18
+
+    1
+    5
+    8
+    11
+    17
+    32
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 3 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
