@@ -42,7 +42,7 @@ defmodule Aoc2025.Y25.Day05 do
     end)
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  def part_two(problem) do
+    problem
+  end
 end
