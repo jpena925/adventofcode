@@ -2,22 +2,6 @@ defmodule Aoc2025.Y25.Day05 do
   alias AoC.Input
 
   def parse(input, _part) do
-    # This function will receive the input path or an %AoC.Input.TestInput{}
-    # struct. To support the test you may read both types of input with either:
-    #
-    # * Input.stream!(input), equivalent to File.stream!/1
-    # * Input.stream!(input, trim: true), equivalent to File.stream!/2
-    # * Input.read!(input), equivalent to File.read!/1
-    #
-    # The role of your parse/2 function is to return a "problem" for the solve/2
-    # function.
-    #
-    # For instance:
-    #
-    # input
-    # |> Input.stream!()
-    # |> Enum.map!(&my_parse_line_function/1)
-
     Input.read!(input)
   end
 
@@ -43,6 +27,24 @@ defmodule Aoc2025.Y25.Day05 do
   end
 
   def part_two(problem) do
-    problem
+    [fresh_ranges, _item_numbers] = String.split(problem, "\n\n", trim: true)
+
+    fresh_ranges
+    |> parse_ranges()
+    |> Enum.sort()
+    |> merge()
+    |> Enum.map(fn {min, max} -> max - min + 1 end)
+    |> Enum.sum()
+  end
+
+  defp merge([first | rest]) do
+    Enum.reduce(rest, [first], fn {min, max}, [{prev_min, prev_max} | acc] ->
+      if min <= prev_max + 1 do
+        [{prev_min, max(prev_max, max)} | acc]
+      else
+        [{min, max}, {prev_min, prev_max} | acc]
+      end
+    end)
+    |> Enum.reverse()
   end
 end
