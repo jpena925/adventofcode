@@ -85,9 +85,10 @@ defmodule Aoc2025.Y25.Day06 do
 
     width = number_rows |> Enum.map(&String.length/1) |> Enum.max()
 
-    padded_rows = Enum.map(number_rows, fn row ->
-      String.pad_trailing(row, width)
-    end)
+    padded_rows =
+      Enum.map(number_rows, fn row ->
+        String.pad_trailing(row, width)
+      end)
 
     numbers =
       (width - 1)..0//-1

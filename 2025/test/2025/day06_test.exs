@@ -57,7 +57,7 @@ defmodule Aoc2025.Y25.Day06Test do
     *   +   *   +
     """
 
-    assert 3263827 == solve(input, :part_two)
+    assert 3_263_827 == solve(input, :part_two)
   end
 
   # You may also implement a test to validate the part two to ensure that you
