@@ -34,7 +34,7 @@ defmodule Aoc2025.Y25.Day06 do
       end)
 
     grouped_values
-    |> Enum.map(&perform_operation/1)
+    |> Enum.map(&perform_operation_one/1)
     |> Enum.sum()
   end
 
@@ -48,7 +48,7 @@ defmodule Aoc2025.Y25.Day06 do
     |> Enum.concat([line_length + 1])
   end
 
-  defp perform_operation(problem) do
+  defp perform_operation_one(problem) do
     trimmed = Enum.map(problem, &String.trim/1)
     {numbers, [op]} = Enum.split(trimmed, -1)
 
@@ -62,7 +62,47 @@ defmodule Aoc2025.Y25.Day06 do
     end)
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  def part_two(problem) do
+    lines = String.split(problem, "\n", trim: true)
+    column_indexes = find_empty_columns(lines)
+
+    grouped_values =
+      [-1 | column_indexes]
+      |> Enum.chunk_every(2, 1, :discard)
+      |> Enum.map(fn [l, r] ->
+        range = (l + 1)..(r - 1)
+        Enum.map(lines, fn line -> String.slice(line, range) end)
+      end)
+
+    grouped_values
+    |> Enum.map(&perform_operation_two/1)
+    |> Enum.sum()
+  end
+
+  defp perform_operation_two(problem) do
+    {number_rows, [op_row]} = Enum.split(problem, -1)
+    op = String.trim(op_row)
+
+    width = number_rows |> Enum.map(&String.length/1) |> Enum.max()
+
+    padded_rows = Enum.map(number_rows, fn row ->
+      String.pad_trailing(row, width)
+    end)
+
+    numbers =
+      (width - 1)..0//-1
+      |> Enum.map(fn col ->
+        padded_rows
+        |> Enum.map(&String.at(&1, col))
+        |> Enum.join()
+        |> String.replace(" ", "")
+      end)
+      |> Enum.filter(&(&1 != ""))
+      |> Enum.map(&String.to_integer/1)
+
+    case op do
+      "*" -> Enum.product(numbers)
+      "+" -> Enum.sum(numbers)
+    end
+  end
 end
