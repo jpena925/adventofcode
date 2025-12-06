@@ -34,9 +34,8 @@ defmodule Aoc2025.Y25.Day06 do
       end)
 
     grouped_values
-    |> Enum.reduce(0, fn problem, acc ->
-      perform_operation(problem) + acc
-    end)
+    |> Enum.map(&perform_operation/1)
+    |> Enum.sum()
   end
 
   defp find_empty_columns(lines) do
@@ -51,26 +50,15 @@ defmodule Aoc2025.Y25.Day06 do
 
   defp perform_operation(problem) do
     trimmed = Enum.map(problem, &String.trim/1)
+    {numbers, [op]} = Enum.split(trimmed, -1)
 
-    case Enum.at(trimmed, -1) do
-      "*" -> multiply(trimmed)
-      "+" -> add(trimmed)
-    end
-  end
-
-  defp multiply(line) do
-    line
-    |> Enum.slice(0, length(line) - 1)
-    |> Enum.reduce(1, fn num, acc ->
-      String.to_integer(num) * acc
-    end)
-  end
-
-  defp add(line) do
-    line
-    |> Enum.slice(0, length(line) - 1)
-    |> Enum.reduce(0, fn num, acc ->
-      String.to_integer(num) + acc
+    numbers
+    |> Enum.map(&String.to_integer/1)
+    |> then(fn nums ->
+      case op do
+        "*" -> Enum.product(nums)
+        "+" -> Enum.sum(nums)
+      end
     end)
   end
 
