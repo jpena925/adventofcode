@@ -28,8 +28,8 @@ defmodule Aoc2025.Y25.Day06 do
     grouped_values =
       [-1 | column_indexes]
       |> Enum.chunk_every(2, 1, :discard)
-      |> Enum.map(fn [l, r] -> (l + 1)..(r - 1) end)
-      |> Enum.map(fn range ->
+      |> Enum.map(fn [l, r] ->
+        range = (l + 1)..(r - 1)
         Enum.map(lines, fn line -> String.slice(line, range) end)
       end)
 
