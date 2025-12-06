@@ -22,8 +22,14 @@ defmodule Aoc2025.Y25.Day06 do
   end
 
   def part_one(problem) do
-    # This function receives the problem returned by parse/2 and must return
-    # today's problem solution for part one.
+    problem
+    |> String.split("\n", trim: true)
+    |> IO.inspect()
+    #if i take the first line and find the space before each new character, that is the index where i should split each line
+    #then i can come back to this and split each line at that index somehow and give them a column index tuple
+    #then i can do a loop where i convert all to integers and find the operation with the matching index and perform that,
+    #the in a final reduce add them all
+
 
     problem
   end
