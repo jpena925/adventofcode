@@ -22,16 +22,56 @@ defmodule Aoc2025.Y25.Day06 do
   end
 
   def part_one(problem) do
-    problem
-    |> String.split("\n", trim: true)
-    |> IO.inspect()
-    #if i take the first line and find the space before each new character, that is the index where i should split each line
-    #then i can come back to this and split each line at that index somehow and give them a column index tuple
-    #then i can do a loop where i convert all to integers and find the operation with the matching index and perform that,
-    #the in a final reduce add them all
+    lines = String.split(problem, "\n", trim: true)
+    column_indexes = find_empty_columns(lines)
 
+    grouped_values =
+      [-1 | column_indexes]
+      |> Enum.chunk_every(2, 1, :discard)
+      |> Enum.map(fn [l, r] -> (l + 1)..(r - 1) end)
+      |> Enum.map(fn range ->
+        Enum.map(lines, fn line -> String.slice(line, range) end)
+      end)
 
-    problem
+    grouped_values
+    |> Enum.reduce(0, fn problem, acc ->
+      perform_operation(problem) + acc
+    end)
+  end
+
+  defp find_empty_columns(lines) do
+    line_length = lines |> hd() |> String.length()
+
+    0..(line_length - 1)
+    |> Enum.filter(fn col ->
+      Enum.all?(lines, fn line -> String.at(line, col) == " " end)
+    end)
+    |> Enum.concat([line_length + 1])
+  end
+
+  defp perform_operation(problem) do
+    trimmed = Enum.map(problem, &String.trim/1)
+
+    case Enum.at(trimmed, -1) do
+      "*" -> multiply(trimmed)
+      "+" -> add(trimmed)
+    end
+  end
+
+  defp multiply(line) do
+    line
+    |> Enum.slice(0, length(line) - 1)
+    |> Enum.reduce(1, fn num, acc ->
+      String.to_integer(num) * acc
+    end)
+  end
+
+  defp add(line) do
+    line
+    |> Enum.slice(0, length(line) - 1)
+    |> Enum.reduce(0, fn num, acc ->
+      String.to_integer(num) + acc
+    end)
   end
 
   # def part_two(problem) do

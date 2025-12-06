@@ -32,12 +32,12 @@ defmodule Aoc2025.Y25.Day06Test do
   test "part one example" do
     input = ~S"""
     123 328  51 64
-    45 64  387 23
+     45 64  387 23
       6 98  215 314
     *   +   *   +
     """
 
-    assert 4277556 == solve(input, :part_one)
+    assert 4_277_556 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
