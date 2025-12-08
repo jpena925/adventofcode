@@ -53,7 +53,27 @@ defmodule Aoc2025.Y25.Day07 do
     |> MapSet.new()
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  def part_two(rows) do
+    [first_row | rest] = rows
+    s_col = find_char_index(first_row, "S")
+
+    initial_timelines = %{s_col => 1}
+
+    final_timelines =
+      Enum.reduce(rest, initial_timelines, fn row, timelines ->
+        splitters = find_all_indices(row, "^")
+
+        Enum.reduce(timelines, %{}, fn {col, count}, acc ->
+          if MapSet.member?(splitters, col) do
+            acc
+            |> Map.update(col - 1, count, &(&1 + count))
+            |> Map.update(col + 1, count, &(&1 + count))
+          else
+            Map.update(acc, col, count, &(&1 + count))
+          end
+        end)
+      end)
+
+    final_timelines |> Map.values() |> Enum.sum()
+  end
 end
