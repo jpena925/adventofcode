@@ -89,7 +89,10 @@ defmodule Aoc2025.Y25.Day08 do
     num_circuits = length(points)
 
     {_final_map, _circuits, last_p1, last_p2} =
-      Enum.reduce_while(sorted_pairs, {parents_map, num_circuits, nil, nil}, fn {_dist, point1, point2}, {pmap, circuits, _, _} ->
+      Enum.reduce_while(sorted_pairs, {parents_map, num_circuits, nil, nil}, fn {_dist, point1,
+                                                                                 point2},
+                                                                                {pmap, circuits,
+                                                                                 _, _} ->
         root1 = find_root(point1, pmap)
         root2 = find_root(point2, pmap)
 
