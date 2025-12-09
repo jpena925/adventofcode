@@ -2,30 +2,26 @@ defmodule Aoc2025.Y25.Day09 do
   alias AoC.Input
 
   def parse(input, _part) do
-    # This function will receive the input path or an %AoC.Input.TestInput{}
-    # struct. To support the test you may read both types of input with either:
-    #
-    # * Input.stream!(input), equivalent to File.stream!/1
-    # * Input.stream!(input, trim: true), equivalent to File.stream!/2
-    # * Input.read!(input), equivalent to File.read!/1
-    #
-    # The role of your parse/2 function is to return a "problem" for the solve/2
-    # function.
-    #
-    # For instance:
-    #
-    # input
-    # |> Input.stream!()
-    # |> Enum.map!(&my_parse_line_function/1)
-
-    Input.read!(input)
+    input
+    |> Input.stream!(trim: true)
+    |> Enum.map(fn line ->
+      [x, y] = String.split(line, ",")
+      {String.to_integer(x), String.to_integer(y)}
+    end)
   end
 
-  def part_one(problem) do
-    # This function receives the problem returned by parse/2 and must return
-    # today's problem solution for part one.
+  def part_one(coords) do
+    coords
+    |> generate_all_pairs()
+    |> Enum.map(fn {{x1, y1}, {x2, y2}} ->
+      (abs(x2 - x1) + 1) * (abs(y2 - y1) + 1)
+    end)
+    |> Enum.max()
+  end
 
-    problem
+  defp generate_all_pairs(list) do
+    indexed = Enum.with_index(list)
+    for {a, i} <- indexed, {b, j} <- indexed, i < j, do: {a, b}
   end
 
   # def part_two(problem) do
