@@ -24,9 +24,9 @@ defmodule Aoc2025.Y25.Day09 do
     for {a, i} <- indexed, {b, j} <- indexed, i < j, do: {a, b}
   end
 
-  #ALL AI BELOW, this was so hard
-  #I spent enough time and gave up
-  #COME BACK LATER and see wtf is happening
+  # ALL AI BELOW, this was so hard
+  # I spent enough time and gave up
+  # COME BACK LATER and see wtf is happening
   def part_two(coords) do
     segments = build_segments(coords)
     vertical_edges = Enum.filter(segments, fn {type, _, _, _} -> type == :vertical end)
